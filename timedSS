@@ -1,0 +1,19 @@
+import time
+import pyautogui
+
+def countdown_timer(seconds):
+    for i in range(seconds, 0, -1):
+        print(i)
+        time.sleep(1)
+    print("Capture!")
+
+def take_screenshot():
+    screenshot = pyautogui.screenshot()
+    desktop_path = "C:/Users/domin/Desktop/"  
+    screenshot.save(f"{desktop_path}screenshot.png")
+    print("Screenshot saved to desktop!")
+
+if __name__ == "__main__":
+    countdown_seconds = 3
+    countdown_timer(countdown_seconds)
+    take_screenshot()
