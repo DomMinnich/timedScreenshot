@@ -1,0 +1,49 @@
+import time
+import pyautogui
+import tkinter as tk
+from tkinter import filedialog, messagebox
+
+def countdown_timer(seconds):
+    for i in range(seconds, 0, -1):
+        countdown_label.config(text=f"Countdown: {i} seconds")
+        window.update()
+        time.sleep(1)
+    countdown_label.config(text="Countdown: Complete!")
+    window.update()
+    print("Capture!")
+
+def take_screenshot(save_path):
+    screenshot = pyautogui.screenshot()
+    screenshot.save(save_path)
+    print("Screenshot saved!")
+
+def start_countdown():
+    try:
+        countdown_seconds = int(entry.get())
+        save_path = filedialog.asksaveasfilename(defaultextension=".png", filetypes=[("PNG files", "*.png")])
+        
+        if save_path:
+            countdown_timer(countdown_seconds)
+            take_screenshot(save_path)
+            messagebox.showinfo("Success", f"Screenshot saved to {save_path}")
+    except ValueError:
+        messagebox.showerror("Error", "Invalid input. Please enter a valid number.")
+
+# Create the main window
+window = tk.Tk()
+window.title("Screenshot Tool")
+
+# Create and pack widgets
+label = tk.Label(window, text="Enter countdown seconds:")
+label.pack(pady=10)
+
+entry = tk.Entry(window)
+entry.pack()
+
+start_button = tk.Button(window, text="Start Countdown", command=start_countdown)
+start_button.pack(pady=10)
+
+countdown_label = tk.Label(window, text="")
+countdown_label.pack(pady=10)
+
+window.mainloop()
